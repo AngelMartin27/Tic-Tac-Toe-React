@@ -1,7 +1,10 @@
 import { useState } from "react";
-import Board from "../Board/board.js";
+import Board from "../Board/Board.js";
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const filas = [];
+  const columnas = [];
+  const totalCasillas = filas * columnas;
+  const [history, setHistory] = useState([Array(totalCasillas).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -33,7 +36,7 @@ export default function Game() {
   return (
     <div className="partida">
       <div className="partida-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} filas={filas} columnas={columnas} />
       </div>
       <div className="partida-info">
         <ol>{moves}</ol>
