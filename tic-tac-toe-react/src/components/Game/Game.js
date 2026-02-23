@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Board from "../Board/Board.js";
 export default function Game() {
-  const filas = [];
-  const columnas = [];
-  const totalCasillas = filas * columnas;
+  const [rows] = useState(3);
+  const [columns] = useState(3);
+  const totalCasillas = rows * columns;
+
   const [history, setHistory] = useState([Array(totalCasillas).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -18,7 +20,7 @@ export default function Game() {
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
   }
-  
+
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
@@ -36,7 +38,7 @@ export default function Game() {
   return (
     <div className="partida">
       <div className="partida-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} filas={filas} columnas={columnas} />
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} rows={rows} columns={columns} />
       </div>
       <div className="partida-info">
         <ol>{moves}</ol>

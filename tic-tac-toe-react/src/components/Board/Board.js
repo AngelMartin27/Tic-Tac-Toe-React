@@ -1,9 +1,7 @@
 import Square from "../Square/Square";
 import { calcularGanador } from "../Utiles/utiles.js";
 
-export default function Board({ xIsNext, squares, onPlay }) {
-  const filas = 3;
-  const columnas = 3;
+export default function Board({ xIsNext, squares, onPlay, rows, columns }) {
 
   function handleClick(i) {
     if (calcularGanador(squares) || squares[i]) {
@@ -23,16 +21,16 @@ export default function Board({ xIsNext, squares, onPlay }) {
   }
 
   const tablero = [];
-  for (let fila = 0; fila < filas; fila++) {
+  for (let row = 0; row < rows; row++) {
     const filaArray = [];
-    for (let columna = 0; columna < columnas; columna++) {
-      const indice = fila * columnas + columna;
+    for (let column = 0; column < columns; column++) {
+      const indice = row * columns + column;
       filaArray.push(
         <Square key={indice} value={squares[indice]} onSquareClick={() => handleClick(indice)}/>
       );
     }
     tablero.push(
-      <div key={fila} className="board-row">
+      <div key={row} className="board-row">
         {filaArray}
       </div>
     );
