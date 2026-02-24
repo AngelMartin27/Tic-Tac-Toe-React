@@ -1,32 +1,32 @@
 import { useState } from "react";
-import Board from "../Board/Board.js";
+import Board from "../Board/Board.tsx";
 export default function Game() {
   const [rows] = useState(3);
   const [columns] = useState(3);
-  const totalCasillas = rows * columns;
+  const totalBoxes = rows * columns;
 
-  const [history, setHistory] = useState([Array(totalCasillas).fill(null)]);
+  const [history, setHistory] = useState([Array(totalBoxes).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares) {
+  function handlePlay(nextSquares: (string | null)[]): void {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function jumpTo(nextMove) {
+  function jumpTo(nextMove: number): void {
     setCurrentMove(nextMove);
   }
 
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
-      description = 'Ir al movimiento #' + move;
+      description = 'Go to move #' + move;
     } else {
-      description = 'Ir al inicio del juego';
+      description = 'Go to game start';
     }
     return (
       <li key={move}>
@@ -36,11 +36,11 @@ export default function Game() {
   });
   
   return (
-    <div className="partida">
-      <div className="partida-board">
+    <div className="game">
+      <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} rows={rows} columns={columns} />
       </div>
-      <div className="partida-info">
+      <div className="game-info">
         <ol>{moves}</ol>
       </div>
     </div>
